@@ -3,7 +3,7 @@ from . import views
 
 # url pattern 정의
 urlpatterns = [
-    path("", views.index, name="index"),
-    path("<int:id>", views.todo_list_id, name="TodoList-id"),
-    path("<str:name>", views.todo_list_name, name="TodoList-name"),
+    path("", views.home, name="home"),
+    path("<int:id>", views.index, name="index"),
+    path("create/", views.create, name="create"),
 ]

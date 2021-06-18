@@ -1,0 +1,15 @@
+{% extends "main/base.html" %}
+
+{% block title %}Create New List{% endblock %}
+
+{% block content %}
+Create Page
+<form method="POST" action="/create/">
+    <!-- CSRF 공격 방지 -->
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" name="save">
+        Create New
+    </button>
+</form>
+{% endblock %}

@@ -8,26 +8,26 @@ from .forms import CreateNewList
 # urls 에서 사용할 함수 정의
 def index(response, id):
     ls = TodoList.objects.get(id=id)
+    if ls in response.user.todolist.all():
+        if response.method == "POST":
+            if response.POST.get("save"):  # list.html 에서 html tag의 name
+                for item in ls.item_set.all():
+                    if response.POST.get("c" + str(item.id)) == "clicked":
+                        item.complete = True
+                    else:
+                        item.complete = False
+                    item.save()
 
-    if response.method == "POST":
-        print(response.POST)
-        if response.POST.get("save"):  # list.html 에서 html tag의 name
-            for item in ls.item_set.all():
-                if response.POST.get("c" + str(item.id)) == "clicked":
-                    item.complete = True
+            elif response.POST.get("newItem"):
+                txt = response.POST.get("new")
+
+                if len(txt) > 2:
+                    ls.item_set.create(text=txt, complete=False)
                 else:
-                    item.complete = False
-                item.save()
+                    print("invalid")
+        return render(response, "main/list.html", {"ls": ls})
 
-        elif response.POST.get("newItem"):
-            txt = response.POST.get("new")
-
-            if len(txt) > 2:
-                ls.item_set.create(text=txt, complete=False)
-            else:
-                print("invalid")
-
-    return render(response, "main/list.html", {"ls": ls})
+    return render(response, "main/view.html", {})
 
 
 def home(response):
@@ -43,8 +43,13 @@ def create(response):
             n = form.cleaned_data["name"]
             t = TodoList(name=n)
             t.save()
+            response.user.todolist.add(t)
 
         return HttpResponseRedirect(f"/{t.id}")
     else:
         form = CreateNewList()
     return render(response, "main/create.html", {"form": form})
+
+
+def view(response):
+    return render(response, "main/view.html", {})

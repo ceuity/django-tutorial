@@ -1,0 +1,22 @@
+{
+    "python.pythonPath": "/home/ever/python_env/django-env/bin/python3",
+    "python.languageServer": "Pylance",
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "--line-length",
+        "100"
+    ],
+    // "files.associations": {"*.html": "jinja-html"},
+    // "emmet.includeLanguages": {"jinja-html": "html"},
+    "[python]": {
+        "editor.formatOnSave": true,
+    },
+    "[html]":{
+        "editor.defaultFormatter": "HookyQR.beautify",
+        "editor.formatOnSave": true,
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+    }
+}
